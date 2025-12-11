@@ -14,7 +14,9 @@ CREATE TABLE "recipes" (
   "title" varchar,
   "description" varchar,
   "steps" varchar,
-  "created_at" timestamp
+  "created_at" timestamp,
+  "ingredients" varchar,
+  "image_url" varchar
 );
 
 ALTER TABLE "recipes" ADD CONSTRAINT "user_id" FOREIGN KEY ("user_id") REFERENCES "users" ("id");
