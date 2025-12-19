@@ -1,4 +1,4 @@
-const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe } = require('../db/db-functions');
+const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe } = require('./db/dbConnection');
 
 const getRecipes =async (req, res)=>{
     try{
@@ -7,4 +7,10 @@ const getRecipes =async (req, res)=>{
     } catch (err){
         return err;
     }
+};
+
+
+
+module.exports = {
+    getRecipes,
 }

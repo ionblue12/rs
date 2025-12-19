@@ -2,14 +2,12 @@ const express = require('express');
 const app = express();
 const port = 3002;
 const cors = require('cors');
+const recipeRouter = require('./routes');
 
 app.use(express.json());
 app.use(cors());
+app.use('/api', recipeRouter);
 
-
-app.get('/', (req, res) =>{
-    res.send("Welcome RS");
-});
 
 
 
