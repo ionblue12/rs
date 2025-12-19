@@ -4,3 +4,9 @@ const router = express.Router();
 
 
 router.get('/recipes', getRecipes);
+
+
+
+
+
+module.exports = router;
