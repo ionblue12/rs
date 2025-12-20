@@ -1,11 +1,12 @@
 const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe } = require('./db/dbConnection');
 
-const getRecipes =async (req, res)=>{
+const getRecipes = async (req, res)=>{
     try{
         const recipes = await getAllRecipes();
-        res.status(201).send({ data: recipes.rows});
+        return res.status(201).json({ data: recipes.rows});
     } catch (err){
-        return err;
+        console.error('getRecipes failed', err);
+        return res.status(500).json({error: 'Failed to get recipes'});
     }
 };
 
