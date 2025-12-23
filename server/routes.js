@@ -1,9 +1,10 @@
 const express = require('express');
-const { getRecipes } = require('./serverFunctions');
+const { getRecipes, getRecipeId } = require('./serverFunctions');
 const router = express.Router();
 
 
 router.get('/recipes', getRecipes);
+router.get('/recipes/:Id', getRecipeId)
 
 
 

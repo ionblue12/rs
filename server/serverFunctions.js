@@ -11,7 +11,19 @@ const getRecipes = async (req, res)=>{
 };
 
 
+const getRecipeId = async (req, res) =>{
+    const { Id } = req.params.id; 
+    try {
+         const recipe = await getRecipe(Id);
+         return res.status(201).json({date: recipe.rows[0]});
+    } catch(err){
+        console.error("not found the ID", err);
+        return res.status(500).json({error: "the id not found"});
+    }
+}
+
 
 module.exports = {
     getRecipes,
+    getRecipeId,
 }
