@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get('/recipes', getRecipes);
-router.get('/recipes/:Id', getRecipeId)
+router.get('/recipes/:recipe_id', getRecipeId)
 
 
 
