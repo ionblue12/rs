@@ -41,6 +41,8 @@ const updateRecipe = (id, steps)=> pool.query('UPDATE recipes SET steps = $1 WHE
 
 const removeRecipe = (id) => pool.query('DELETE FROM recipes WHERE id = $1 RETRUNING *', [id]);
 
+const findUser = (username)=> pool.query('SELECT * FROM users WHERE username=$1', [username]);
+
 module.exports ={
     getAllRecipes,
     getRecipe,
@@ -48,4 +50,5 @@ module.exports ={
     updateRecipe,
     removeRecipe,
     getIngredients,
+    findUser,
 }
