@@ -43,6 +43,8 @@ const removeRecipe = (id) => pool.query('DELETE FROM recipes WHERE id = $1 RETRU
 
 const findUser = (username)=> pool.query('SELECT * FROM users WHERE username=$1', [username]);
 
+const getUserById = (id) => pool.query('SELECT id, username FROM users WHERE id =$1', [id]);
+
 module.exports ={
     getAllRecipes,
     getRecipe,
@@ -51,4 +53,5 @@ module.exports ={
     removeRecipe,
     getIngredients,
     findUser,
+    getUserById,
 }

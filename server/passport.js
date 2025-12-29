@@ -1,4 +1,4 @@
-const { findUser } = require('./db/dbConnection');
+const { findUser, getUserById } = require('./db/dbConnection');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 
@@ -20,7 +20,19 @@ const setpassport = (passport)=>{
                 return done(err);
             }
         }
-    )
+    );
+
+    passport.serializeUser((user, done) => done(null, user.id));
+
+    passport.deserializeUser(async (id, done) =>{
+        try{
+            const results = await getUserById(id);
+            const user = results.rows[0] || null;
+            done(null, user);
+        } catch(err){
+            done(err);
+        }
+    });
 }
 
 module.exports = setpassport;
