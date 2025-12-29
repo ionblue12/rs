@@ -1,7 +1,7 @@
 const { findUser } = require('./db/dbConnection');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
+
 
 
 const setpassport = (passport)=>{
@@ -22,3 +22,5 @@ const setpassport = (passport)=>{
         }
     )
 }
+
+module.exports = setpassport;
