@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 
 const setpassport = (passport)=>{
     passport.use(
-        new LocalStrategy({usernamefield: 'username'}), async(username, password, done) =>{
+        new LocalStrategy({usernameField: 'username'}, async(username, password, done) =>{
             try {
                 const results = await findUser(username);
                 const user = results.rows[0];
@@ -20,6 +20,7 @@ const setpassport = (passport)=>{
                 return done(err);
             }
         }
+    )
     );
 
     passport.serializeUser((user, done) => done(null, user.id));
@@ -33,6 +34,6 @@ const setpassport = (passport)=>{
             done(err);
         }
     });
-}
+};
 
-module.exports = setpassport;
+module.exports = {setpassport};
