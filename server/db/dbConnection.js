@@ -45,6 +45,8 @@ const findUser = (username)=> pool.query('SELECT * FROM users WHERE username=$1'
 
 const getUserById = (id) => pool.query('SELECT id, username FROM users WHERE id =$1', [id]);
 
+const addUser = (firstname, lastname, email, username, password_hash) => pool.query('INSERT INTO users (firstname, lastname, email, username, password_hash) VALUES ($1, $2, $3, $4, $5)', [firstname, lastname, email, username, password_hash]);
+
 module.exports ={
     getAllRecipes,
     getRecipe,
@@ -54,4 +56,5 @@ module.exports ={
     getIngredients,
     findUser,
     getUserById,
+    addUser,
 }

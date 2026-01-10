@@ -1,5 +1,5 @@
 const express = require('express');
-const { getRecipes, getRecipeId, showIngredientsId } = require('./serverFunctions');
+const { getRecipes, getRecipeId, showIngredientsId, newUser } = require('./serverFunctions');
 const router = express.Router();
 const { requireAuth } = require('./middleware');
 const passport = require('passport');
@@ -16,7 +16,7 @@ router.post('/login', (req, res , next) =>{
 
         req.logIn(user, (err2) =>{
             if(err2) return next(err2);
-            return res.json({ok: true, user: req.use});
+            return res.json({ok: true, user: req.user});
         });
     })(req, res, next);
 });
@@ -33,6 +33,7 @@ router.post("/logout", (req, res) => {
 router.get('/recipes', getRecipes);
 router.get('/recipes/recipesteps/:recipe_id', getRecipeId);
 router.get('/recipes/ingredients/:recipe_id', showIngredientsId);
+router.post('/register', newUser);
 
 
 

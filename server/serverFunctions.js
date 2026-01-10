@@ -1,4 +1,5 @@
-const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngredients } = require('./db/dbConnection');
+const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngredients, addUser } = require('./db/dbConnection');
+const bcrypt = require('bcrypt');
 
 const getRecipes = async (req, res)=>{
     try{
@@ -33,9 +34,24 @@ const showIngredientsId = async(req, res) =>{
     }
 };
 
+const newUser = async(req, res) => {
+    const { firstname, lastname, email, username, password } = req.body;
+    const saltRounds = 10;
+    const password_hash = await bcrypt.hash(password, saltRounds);
+    try {
+        await addUser(firstname, lastname, email, username, password_hash);
+        return res.status(201).json({message: `${username} added to Recipes`});
+    } catch(err){
+        if(err.code == "23505"){
+            res.status(409).json({error: "username or email already exists"})
+        }
+        
+    }
+}
 
 module.exports = {
     getRecipes,
     getRecipeId,
     showIngredientsId,
+    newUser,
 }
