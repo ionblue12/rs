@@ -24,7 +24,6 @@ router.get("/me", (req, res) => {
   res.json({ user: req.user || null });
 });
 
-// POST /auth/logout
 router.post("/logout", (req, res) => {
   req.logout(() => {
     req.session.destroy(() => res.json({ ok: true }));
