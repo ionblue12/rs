@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const Registeriation=()=>{
 
     const [userInfo, setuserInfo] = useState({
@@ -10,14 +10,16 @@ const Registeriation=()=>{
         password: '',
     });
 
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+
     const handleChange = (e)=> {
-        const { name, value} = e.target;
+        const { name, value } = e.target;
         setuserInfo((prev) => ({...prev, [name]: value}));
     };
 
     const onSubmit = async (e)=>{
         e.preventDefault();
-        console.log('info', userInfo);
         try{
             const response = await fetch('http://localhost:3002/api/register', {
             method: 'POST',
@@ -34,23 +36,37 @@ const Registeriation=()=>{
         });
         
         const jsonResponse = await response.json();
-        console.log('Data', jsonResponse);
+        console.log(jsonResponse);
+       
 
         setuserInfo({
-        firstName: '',
-        lastName: '',
+        firstname: '',
+        lastname: '',
         email: '',
         username: '',
         password: '',
     });
-    }catch(err){
-        console.error({err: 'Somthing went wrong'});
+
+     setMessage(`User ${jsonResponse.firstname} ${jsonResponse.lastname} added successfully!`);
+        setTimeout(()=> {
+            navigate('/', {
+                state: 
+                {
+                    message: `Welcome ${jsonResponse.firstname} ${jsonResponse.lastname}!`
+                }
+            });
+        }, 6000);
+    }catch(error){
+        setMessage('Error adding user. Please try again');
     }
     }; 
     return(
         <form onSubmit={onSubmit}>
+            <h2>Add New User</h2>
+            {message && <div>{message}</div>}
             <label>First Name </label>
             <input 
+            name='firstname'
             type="text"
             value={userInfo.firstname}
             onChange={handleChange}
@@ -58,6 +74,7 @@ const Registeriation=()=>{
             <br></br>
             <label>Last Name </label>
             <input
+            name='lastname'
             type="text"
             value={userInfo.lastname}
             onChange={handleChange}
@@ -65,6 +82,7 @@ const Registeriation=()=>{
             <br></br>
             <label>Email </label>
             <input
+            name='email'
             type="email"
             value={userInfo.email}
             onChange={handleChange}
@@ -72,6 +90,7 @@ const Registeriation=()=>{
             <br></br>
             <label>Username </label>
             <input
+            name='username'
             type="text"
             value={userInfo.username}
             onChange={handleChange}
@@ -79,6 +98,7 @@ const Registeriation=()=>{
             <br></br>
             <label>Password </label>
             <input
+            name='password'
             type="text"
             value={userInfo.password}
             onChange={handleChange}
