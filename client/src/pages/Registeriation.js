@@ -47,12 +47,12 @@ const Registeriation=()=>{
         password: '',
     });
 
-     setMessage(`User ${jsonResponse.firstname} ${jsonResponse.lastname} added successfully!`);
+     setMessage(jsonResponse.message);
         setTimeout(()=> {
             navigate('/', {
                 state: 
                 {
-                    message: `Welcome ${jsonResponse.firstname} ${jsonResponse.lastname}!`
+                    message: `Welcome ${jsonResponse.username}!`
                 }
             });
         }, 6000);
