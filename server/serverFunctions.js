@@ -45,9 +45,12 @@ const newUser = async(req, res) => {
         if(err.code == "23505"){
             res.status(409).json({error: "username or email already exists"})
         }
+        return res.status(500).json({
+            error: 'internat server error'
+        });
         
     }
-}
+};
 
 module.exports = {
     getRecipes,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 const Registeriation=()=>{
 
     const [userInfo, setuserInfo] = useState({
@@ -36,7 +36,19 @@ const Registeriation=()=>{
         });
         
         const jsonResponse = await response.json();
-        console.log(jsonResponse);
+
+        if(!response.ok){
+            setMessage(data.error || 'Registeriation failed');
+        }
+        setMessage(jsonResponse.message);
+        setTimeout(()=> {
+            navigate('/', {
+                state: 
+                {
+                    message: `Welcome ${jsonResponse.username}!`
+                }
+            });
+        }, 6000);
        
 
         setuserInfo({
@@ -47,15 +59,7 @@ const Registeriation=()=>{
         password: '',
     });
 
-     setMessage(jsonResponse.message);
-        setTimeout(()=> {
-            navigate('/', {
-                state: 
-                {
-                    message: `Welcome ${jsonResponse.username}!`
-                }
-            });
-        }, 6000);
+    
     }catch(error){
         setMessage('Error adding user. Please try again');
     }
