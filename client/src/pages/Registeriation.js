@@ -38,17 +38,13 @@ const Registeriation=()=>{
         const jsonResponse = await response.json();
 
         if(!response.ok){
-            setMessage(data.error || 'Registeriation failed');
+            setMessage(jsonResponse.error || 'Registeriation failed');
+            return;
         }
         setMessage(jsonResponse.message);
-        setTimeout(()=> {
-            navigate('/', {
-                state: 
-                {
-                    message: `Welcome ${jsonResponse.username}!`
-                }
-            });
-        }, 6000);
+        navigate('/', {
+            user: jsonResponse.user
+        })
        
 
         setuserInfo({
