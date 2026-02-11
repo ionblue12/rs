@@ -46,7 +46,7 @@ const newUser = async(req, res) => {
             res.status(409).json({error: "username or email already exists"})
         }
         return res.status(500).json({
-            error: 'internat server error'
+            error: 'Internal server error'
         });
         
     }
