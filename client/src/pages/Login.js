@@ -33,7 +33,7 @@ const Login = ()=>{
                 return;
             }
             setMessage(jsonResponse.message);
-            navigate('/', {
+            navigate('/recipes', {
                 user: jsonResponse.user
             })
             setUserinfo({
