@@ -7,6 +7,7 @@ import RecipeDetails from './pages/RecipeDetails';
 import Registeriation from './pages/Registeriation';
 import NewRecipe from './pages/NewRecipe';
 import Login from './pages/Login';
+import Allrecipes from './pages/Allrecipes';
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,7 @@ function App() {
           <Route path="/registeration" element={<Registeriation />}/>
           <Route path='/newrecipe' element={<NewRecipe />}/>
           <Route path='/login' element={<Login />}/>
+          <Route path='/allrecipes' element={<Allrecipes />}/>
         </Routes>
       </BrowserRouter>
     </div>

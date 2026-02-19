@@ -42,9 +42,12 @@ const Registeriation=()=>{
             return;
         }
         setMessage(jsonResponse.message);
-        navigate('/recipes', {
+        setTimeout(()=>{
+            navigate('/allrecipes', {
             user: jsonResponse.user
-        })
+        });
+        
+        }, 3000);
        
 
         setuserInfo({
