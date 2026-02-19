@@ -29,7 +29,7 @@ const pool = new Pool({
     port: process.env.PGPORT,
 });
 
-const getAllRecipes = ()=> pool.query('SELECT * FROM recipes');
+const getAllRecipes = (user_id)=> pool.query('SELECT * FROM recipes WHERE user_id = $1 ORDER BY created_at DESC', [user_id]);
 
 const getRecipe = (recipe_id)=> pool.query('SELECT * FROM recipe_steps WHERE recipe_id=$1', [recipe_id]);
 

@@ -2,11 +2,12 @@ const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngr
 const bcrypt = require('bcrypt');
 
 const getRecipes = async (req, res)=>{
+    const { user_id } = req.params;
     try{
-        const recipes = await getAllRecipes();
+        const recipes = await getAllRecipes(user_id);
         return res.status(201).json({ data: recipes.rows});
     } catch (err){
-        console.error('getRecipes failed', err);
+        console.error('No Recipes', err);
         return res.status(500).json({error: 'Failed to get recipes'});
     }
 };
