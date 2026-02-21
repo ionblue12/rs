@@ -2,12 +2,12 @@ const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngr
 const bcrypt = require('bcrypt');
 
 const getRecipes = async (req, res)=>{
-    const { user_id } = req.params;
+    const user_id= req.user.id;
     try{
         const recipes = await getAllRecipes(user_id);
-        return res.status(201).json({ data: recipes.rows});
+        return res.status(200).json({ data: recipes.rows});
     } catch (err){
-        console.error('No Recipes', err);
+        console.error('no Recipes', err);
         return res.status(500).json({error: 'Failed to get recipes'});
     }
 };
@@ -47,7 +47,7 @@ const newUser = async(req, res) => {
             res.status(409).json({error: "username or email already exists"})
         }
         return res.status(500).json({
-            error: 'Internal server error'
+            error: 'internal server error'
         });
         
     }

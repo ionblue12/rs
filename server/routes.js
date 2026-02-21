@@ -29,7 +29,7 @@ router.post("/logout", (req, res) => {
     req.session.destroy(() => res.json({ ok: true }));
   });
 });
-router.get('/recipes/:user_id', requireAuth, getRecipes);
+router.get('/recipes/mine', requireAuth, getRecipes);
 router.get('/recipes/recipesteps/:recipe_id', requireAuth, getRecipeId);
 router.get('/recipes/ingredients/:recipe_id',requireAuth, showIngredientsId);
 router.post('/register', newUser);
