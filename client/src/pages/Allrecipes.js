@@ -22,6 +22,7 @@ const Allrecipes =()=>{
 
    useEffect(()=>{
     showRecipes();
+    console.log('all recipes', recipes);
    }, [])
 
     return(
