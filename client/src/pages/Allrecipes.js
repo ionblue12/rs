@@ -12,11 +12,12 @@ const Allrecipes =()=>{
         }
     );
     const jsonResponse = await response.json();
+    console.log('response', jsonResponse);
     if(!response.ok) {
         setMessage(jsonResponse.error || "no recipes");
         return;
     }
-    setRecipes(prev =>([...prev, jsonResponse]));
+    setRecipes(prev =>([...prev, jsonResponse.data]));
     setMessage(jsonResponse.message);
    }
 
@@ -27,7 +28,15 @@ const Allrecipes =()=>{
 
     return(
         <div>
-
+            <h2>My Rec</h2>
+            {recipes.length === 0 && <p>No Rec Found</p>}
+            {recipes.map(recipe => (
+                <div key={recipe.id}>
+                    <h3>{recipe.title}</h3>
+                    <p>{recipe.description}</p>
+                    <img>{recipe.image_url}</img>
+                </div>
+            ))}
         </div>
     )
 }

@@ -102,7 +102,7 @@ const Registeriation=()=>{
             <label>Password </label>
             <input
             name='password'
-            type="text"
+            type="password"
             value={userInfo.password}
             onChange={handleChange}
             ></input>
