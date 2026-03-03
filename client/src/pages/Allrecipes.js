@@ -12,18 +12,16 @@ const Allrecipes =()=>{
         }
     );
     const jsonResponse = await response.json();
-    console.log('response', jsonResponse);
     if(!response.ok) {
         setMessage(jsonResponse.error || "no recipes");
         return;
     }
-    setRecipes(prev =>([...prev, jsonResponse.data]));
+    setRecipes(jsonResponse.data);
     setMessage(jsonResponse.message);
    }
 
    useEffect(()=>{
     showRecipes();
-    console.log('all recipes', recipes);
    }, [])
 
     return(
@@ -34,7 +32,7 @@ const Allrecipes =()=>{
                 <div key={recipe.id}>
                     <h3>{recipe.title}</h3>
                     <p>{recipe.description}</p>
-                    <img>{recipe.image_url}</img>
+                    <img src={recipe.image_url} alt={recipe.title} />
                 </div>
             ))}
         </div>
