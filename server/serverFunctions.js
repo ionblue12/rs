@@ -53,9 +53,23 @@ const newUser = async(req, res) => {
     }
 };
 
+
+const deleteRecipeId = async(req, res) => {
+    const { id } = req.params;
+    try {
+        await removeRecipe(id);
+        return res.status(200).json({message: 'Recipe deleted successfully'});
+    } catch(err){
+        console.error('Failed to delete recipe', err);
+        return res.status(500).json({error: 'Failed to delete recipe'});
+    }
+}
+    
+
 module.exports = {
     getRecipes,
     getRecipeId,
     showIngredientsId,
     newUser,
+    deleteRecipeId,
 }
