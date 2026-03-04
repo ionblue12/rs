@@ -39,7 +39,7 @@ const addRecipe = (title, description, image_url) => pool.query('INSERT INTO rec
 
 const updateRecipe = (id, steps)=> pool.query('UPDATE recipes SET steps = $1 WHERE id = $2', [id, steps]);
 
-const removeRecipe = (id) => pool.query('DELETE FROM recipes WHERE id = $1 RETRUNING *', [id]);
+const removeRecipe = (id) => pool.query('WITH deleted_recipe AS (DELETE FROM recipes WHERE id = $1 RETURNING id), deleted_ingredients AS (DELETE FROM ingredients WHERE recipe_id IN (SELECT id FROM deleted_recipe)) DELETE FROM recipe_steps WHERE recipe_id IN (SELECT id FROM deleted_recipe)', [id]);
 
 const findUser = (username)=> pool.query('SELECT * FROM users WHERE username=$1', [username]);
 

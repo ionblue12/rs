@@ -33,6 +33,7 @@ const Allrecipes =()=>{
                     <h3>{recipe.title}</h3>
                     <p>{recipe.description}</p>
                     <img src={recipe.image_url} alt={recipe.title} />
+                    <button>x</button>
                 </div>
             ))}
         </div>
