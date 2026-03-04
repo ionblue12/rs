@@ -18,7 +18,22 @@ const Allrecipes =()=>{
     }
     setRecipes(jsonResponse.data);
     setMessage(jsonResponse.message);
-   }
+   };
+
+   const handleDlete = async (id) => {
+    const response = await fetch(`http://localhost:3002/api/recipes/${id}`,{
+        method: 'DELETE',
+        credentials: 'include',
+    });
+    const jsonResponse = await response.json();
+    if(!response.ok){
+        setMessage(jsonResponse.error || 'Failed to delete recipe');
+        return;
+    }
+    setMessage(jsonResponse.message);
+    showRecipes();
+   };
+    
 
    useEffect(()=>{
     showRecipes();
@@ -33,7 +48,7 @@ const Allrecipes =()=>{
                     <h3>{recipe.title}</h3>
                     <p>{recipe.description}</p>
                     <img src={recipe.image_url} alt={recipe.title} />
-                    <button>x</button>
+                    <button onClick={()=>handleDlete(recipe.id)}>x</button>
                 </div>
             ))}
         </div>
