@@ -48,7 +48,7 @@ const Allrecipes =()=>{
                     <h3>{recipe.title}</h3>
                     <p>{recipe.description}</p>
                     <img src={recipe.image_url} alt={recipe.title} />
-                    <button onClick={()=>handleDlete(recipe.id)}>x</button>
+                    <button onClick={()=>{if(window.confirm('Are you sure you want to delete this recipe?')){handleDlete(recipe.id);}}}>x</button>
                 </div>
             ))}
         </div>
