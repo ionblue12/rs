@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/recipe" element={<RecipeDetails />}/>
+          <Route path="/recipe/:id" element={<RecipeDetails />}/>
           <Route path="/profile" element={<Profile />}/>
           <Route path="/registeration" element={<Registeriation />}/>
           <Route path='/newrecipe' element={<NewRecipe />}/>

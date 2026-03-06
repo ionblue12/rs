@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const Allrecipes =()=>{
     const [message, setMessage] = useState('');
     const [recipes, setRecipes] = useState([]);
+    const navigate = useNavigate();
 
    const showRecipes =async ()=>{
     const response = await fetch('http://localhost:3002/api/recipes/mine',
@@ -47,7 +49,7 @@ const Allrecipes =()=>{
                 <div key={recipe.id}>
                     <h3>{recipe.title}</h3>
                     <p>{recipe.description}</p>
-                    <img src={recipe.image_url} alt={recipe.title} />
+                    <img src={recipe.image_url} alt={recipe.title} onClick={()=> navigate(`recipe/${recipe.id}`)}/>
                     <button onClick={()=>{if(window.confirm('Are you sure you want to delete this recipe?')){handleDlete(recipe.id);}}}>x</button>
                 </div>
             ))}
