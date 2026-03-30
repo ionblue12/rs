@@ -1,5 +1,5 @@
 const express = require('express');
-const { getRecipes, getRecipeId, showIngredientsId, newUser, deleteRecipeId } = require('./serverFunctions');
+const { getRecipes, getRecipeId, showIngredientsId, newUser, deleteRecipeId, getStepsById } = require('./serverFunctions');
 const router = express.Router();
 const { requireAuth } = require('./middleware');
 const passport = require('passport');

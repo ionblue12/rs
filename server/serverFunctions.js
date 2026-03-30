@@ -1,4 +1,4 @@
-const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngredients, addUser } = require('./db/dbConnection');
+const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngredients, addUser, getSteps } = require('./db/dbConnection');
 const bcrypt = require('bcrypt');
 
 const getRecipes = async (req, res)=>{
@@ -63,7 +63,18 @@ const deleteRecipeId = async(req, res) => {
         console.error('Failed to delete recipe', err);
         return res.status(500).json({error: 'Failed to delete recipe'});
     }
-}
+};
+
+const getStepsById = async(req, res) =>{
+    const { recipe_id } = req.params;
+    try{
+        const steps = await getSteps(recipe_id);
+        return res.status(201).json({data: steps.rows});
+    } catch(err){
+        console.error('failed to fetch steps', err);
+        return res.status(501).json({error: 'the id not found'});
+    }
+};
     
 
 module.exports = {
@@ -72,4 +83,5 @@ module.exports = {
     showIngredientsId,
     newUser,
     deleteRecipeId,
+    getStepsById,
 }
