@@ -1,4 +1,4 @@
-const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngredients, addUser, getSteps } = require('./db/dbConnection');
+const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngredients, addUser, getRecipeById } = require('./db/dbConnection');
 const bcrypt = require('bcrypt');
 
 const getRecipes = async (req, res)=>{
@@ -17,9 +17,9 @@ const getRecipeId = async (req, res) =>{
     const { recipe_id } = req.params; 
     try {
          const recipe = await getRecipe(recipe_id);
-         return res.status(201).json({date: recipe.rows});
+         return res.status(201).json({data: recipe.rows});
     } catch(err){
-        console.error("not found the ID", err);
+        console.error("failed to fetch the steps", err);
         return res.status(500).json({error: "the id not found"});
     }
 };
@@ -65,16 +65,17 @@ const deleteRecipeId = async(req, res) => {
     }
 };
 
-const getStepsById = async(req, res) =>{
-    const { recipe_id } = req.params;
+const recipeById = async (res, req) =>{
+    const { id } = req.params;
     try{
-        const steps = await getSteps(recipe_id);
-        return res.status(201).json({data: steps.rows});
+        const recipe = await getRecipeById(id);
+        return res.status(201).json({data: recipe.rows});
     } catch(err){
-        console.error('failed to fetch steps', err);
-        return res.status(501).json({error: 'the id not found'});
+        console.error('failed to fetch recipe', err)
+        return res.status(501).json({error: 'no recipe id'});
     }
 };
+
     
 
 module.exports = {
@@ -83,5 +84,6 @@ module.exports = {
     showIngredientsId,
     newUser,
     deleteRecipeId,
-    getStepsById,
+    recipeById,
+    
 }
