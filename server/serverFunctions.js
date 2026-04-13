@@ -65,7 +65,7 @@ const deleteRecipeId = async(req, res) => {
     }
 };
 
-const recipeById = async (res, req) =>{
+const recipeById = async (req, res) =>{
     const { id } = req.params;
     try{
         const recipe = await getRecipeById(id);
