@@ -11,14 +11,14 @@ const RecipeDetails =() =>{
         const response = await fetch(`http://localhost:3002/api/recipes/${id}`, {
             credentials: 'include',
         });
-        const jsonResponse = response.json();
+        const jsonResponse = await response.json();
         if(!response.ok){
             setMessage(jsonResponse.error || 'Failed to fetch recipe');
             return;
         }
         setMessage(jsonResponse.message);
         setRecipes(jsonResponse.data);
-        console.log(jsonResponse.data, 'data');
+        
     };
 
     const getIngredients = async () => {
@@ -60,7 +60,7 @@ const RecipeDetails =() =>{
         <div>
             {recipes.length === 0 && <p>No Recipe</p>}
             {recipes.map(recipe => (
-                <h1 key={recipe.id}>{recipe.title}{recipe.image_url}</h1>
+                <h1 key={recipe.id}>{recipe.title}<img src={recipe.image_url} alt={recipe.title} /></h1>
             ))}
             <h1>Ingredients</h1>
             {ingredients.length === 0 && <p>No Ingredients</p>}
@@ -76,6 +76,7 @@ const RecipeDetails =() =>{
                     <li key={step.step_number}>{step.instruction}</li>
                 ))}
             </ol>
+            <button>Edit</button>
             
 
         </div>
