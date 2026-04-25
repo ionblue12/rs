@@ -1,4 +1,4 @@
-# In Progress Project
+# Project (In Progress)
 
 # Recipe-Sharing (Full Stack)
 A full-stack Recipes Saving application built with React, Node.js, and PostgreSQL.  
@@ -16,4 +16,4 @@ Users can create, update, and manage recipe details with a clean UI and fast bac
 - Database: PostgreSQL
 - Tools: Git, GitHub
 
-# The project is in progress
+
