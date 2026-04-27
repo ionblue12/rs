@@ -1,6 +1,21 @@
-const requireAuth =(req, res, next) =>{
-    if(req.isAuthenticated && req.isAuthenticated()) return next();
-    return res.status(401).json({error: "not logged in"});
-}
+const { supabase } = require('./supabaseClient');
 
+const requireAuth = async (req, res, next) =>{
+    try{
+        const authHeader = req.headers.authorization;
+
+        if(!authHeader || !authHeader.startsWith("Bearer ")){
+            return res.status(401).json({ error: "Unauthorized" });
+    }
+        const token = authHeader.split(" ")[1];
+        const { data, error } = await supabase.auth.getUser(token);
+        if(error || !data?.user) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+        req.user = data.user;
+        next();
+    }catch(erro){
+        return res.status(500).json({ error: "Internal server error"});
+    };
+}
 module.exports = { requireAuth };
