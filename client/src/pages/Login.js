@@ -1,46 +1,34 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from '../supabaseClient';
+
 
 const Login = ()=>{
-    const [userinfo, setUserinfo] = useState({
-        username: '',
-        password: '',
-    });
+    const [email, setEmail] = useState("");
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
     
     const handleChange = (e)=>{
-        const {name, value} = e.target;
-        setUserinfo((prev)=> ({...prev, [name]: value}));
+        setEmail(e.target.value);
     };
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try{
-            const response = await fetch('http://localhost:3002/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            const { error } = await supabase.auth.signInWithOtp({
+                email,
+                options: {
+                    shouldCreateUser: true,
+                    emailRedirectTo: 'http://localhost:3000/allrecipes'
                 },
-                credentials: "include",
-                body: JSON.stringify({
-                    username: userinfo.username,
-                    password: userinfo.password,
-                })
-            });
-            const jsonResponse = await response.json();
-            if(!response.ok){
-                setMessage(jsonResponse.error || 'Login failed')
+            })
+            
+            if(error){
+                setMessage(error.message || 'Login failed');
                 return;
             }
-            setMessage(jsonResponse.message);
-            navigate('/allrecipes', {
-                user: jsonResponse.user
-            })
-            setUserinfo({
-                username: '',
-                password: ''
-            })
+            setMessage(" Check your email for the login link");
+            
             
         }catch(error){
             setMessage('Username or password wrong')
@@ -52,20 +40,12 @@ const Login = ()=>{
     return(
         <form onSubmit={handleSubmit}>
             <h1>Please Login to see your Recipes</h1>
-            <label>Username </label>
+            <label>Email </label>
             <input
-            name='username'
-            type='text'
-            value={userinfo.username}
+            type='email'
+            value={email}
             onChange={handleChange}
-            ></input>
-            <br></br>
-            <label>Password </label>
-            <input
-            name='password'
-            type='password'
-            value={userinfo.password}
-            onChange={handleChange}
+            required
             ></input>
             <br></br>
             <button>Login</button>

@@ -1,4 +1,4 @@
-const { supabase } = require('./supabaseClient');
+const { supabase } = require('../client/src/supabaseClient');
 
 const requireAuth = async (req, res, next) =>{
     try{

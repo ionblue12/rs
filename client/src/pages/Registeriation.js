@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { data, useNavigate } from "react-router-dom";
+import { supabase } from '../supabaseClient';
+
+
 const Registeriation=()=>{
 
     const [userInfo, setuserInfo] = useState({
@@ -7,7 +10,7 @@ const Registeriation=()=>{
         lastname: '',
         email: '',
         username: '',
-        password: '',
+       
     });
 
     const [message, setMessage] = useState('');
