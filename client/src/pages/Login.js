@@ -6,7 +6,8 @@ import { supabase } from '../supabaseClient';
 const Login = ()=>{
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState('');
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+
     
     const handleChange = (e)=>{
         setEmail(e.target.value);
@@ -15,6 +16,8 @@ const Login = ()=>{
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try{
+            if(loading) return;
+            setLoading(true);
             const { error } = await supabase.auth.signInWithOtp({
                 email,
                 options: {
@@ -48,7 +51,7 @@ const Login = ()=>{
             required
             ></input>
             <br></br>
-            <button>Login</button>
+            <button disabled={loading}>{loading? "Sending..." : "Login"}</button>
         </form>
     )
 }
