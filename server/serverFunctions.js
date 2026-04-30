@@ -1,4 +1,4 @@
-const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngredients, addUser, getRecipeById } = require('./db/dbConnection');
+const { getAllRecipes, getRecipe, addRecipe, updateRecipe, removeRecipe, getIngredients, addUser, getRecipeById, addIngredients, addSteps } = require('./db/dbConnection');
 const bcrypt = require('bcrypt');
 
 const getRecipes = async (req, res)=>{
@@ -75,6 +75,11 @@ const recipeById = async (req, res) =>{
         return res.status(501).json({error: 'no recipe id'});
     }
 };
+
+const newRecipe = async(req, res) => {
+    const { title, description, image_url} = req.body;
+    const user_id = req.user.id;
+}
 
     
 

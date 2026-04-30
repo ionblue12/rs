@@ -35,7 +35,11 @@ const getRecipe = (recipe_id)=> pool.query('SELECT * FROM recipe_steps WHERE rec
 
 const getIngredients = (recipe_id) => pool.query('SELECT * FROM ingredients WHERE recipe_id = $1', [recipe_id]);
 
-const addRecipe = (title, description, image_url) => pool.query('INSERT INTO recipes (title, description, steps, ingredients, image_url) VALUES ($1, $2, $3, $4, $5)', [title, description, steps, ingredients, image_url]);
+const addRecipe = (title, description, image_url, user_id) => pool.query('INSERT INTO recipes (title, description, steps, ingredients, image_url, user_id) VALUES ($1, $2, $3, $4, $5, $6)', [title, description, steps, ingredients, image_url, user_id]);
+
+const addIngredients = (recipe_id, position, ingredient_name) => pool.query('INSERT INTO INGREDIENTS (recipe_id, position, ingredient_name) VALUES ($1, $2, $3)', [recipe_id, position, ingredient_name]);
+
+const addSteps = (recipe_id, step_number, instruction) => pool.query('INSERT INTO recipe_steps (recipe_id, step_number, instruction) VALUES ($1, $2, $3)', [recipe_id, step_number, instruction]);
 
 const updateRecipe = (id, steps)=> pool.query('UPDATE recipes SET steps = $1 WHERE id = $2', [id, steps]);
 
@@ -60,5 +64,7 @@ module.exports ={
     getUserById,
     addUser,
     getRecipeById,
+    addIngredients,
+    addSteps,
     
 }
