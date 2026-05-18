@@ -1,5 +1,5 @@
 const express = require('express');
-const { getRecipes, getRecipeId, showIngredientsId, newUser, deleteRecipeId, recipeById } = require('./serverFunctions');
+const { getRecipes, getRecipeId, showIngredientsId, newUser, deleteRecipeId, recipeById, newRecipe } = require('./serverFunctions');
 const router = express.Router();
 const { requireAuth } = require('./middleware');
 const passport = require('passport');
@@ -38,6 +38,7 @@ router.get('/recipes/ingredients/:recipe_id',requireAuth, showIngredientsId);
 router.post('/register', newUser);
 router.delete('/recipes/:id',requireAuth, deleteRecipeId);
 router.get('/recipes/:id', requireAuth, recipeById);
+router.post('/recipes/addrecipe', requireAuth, newRecipe);
 
 
 

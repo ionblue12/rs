@@ -79,6 +79,13 @@ const recipeById = async (req, res) =>{
 const newRecipe = async(req, res) => {
     const { title, description, image_url} = req.body;
     const user_id = req.user.id;
+    try{
+        await addRecipe(title, description, image_url, user_id);
+        return res.status(201).json({message: `${title} added to your recipes`});
+    }catch(err){
+        console.error('failed to add the new recipe', err);
+        return res.status(500).json({error: 'no new recipe added'});
+    }
 }
 
     
@@ -90,5 +97,5 @@ module.exports = {
     newUser,
     deleteRecipeId,
     recipeById,
-    
+    newRecipe,
 }
