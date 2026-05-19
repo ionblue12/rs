@@ -16,6 +16,7 @@ const NewRecipe =()=>{
         e.preventDefault();
         const { data } = await supabase.auth.getSession();
         const token = data.session?.access_token;
+        
 
         const response = await fetch('http://localhost:3002/api/recipes/addrecipe',{
             method: 'POST',

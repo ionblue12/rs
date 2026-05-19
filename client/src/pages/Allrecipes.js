@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { supabase } from "../supabaseClient";
 
 const Allrecipes =()=>{
     const [message, setMessage] = useState('');
@@ -8,9 +8,18 @@ const Allrecipes =()=>{
     const navigate = useNavigate();
 
    const showRecipes =async ()=>{
+
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token;
+
     const response = await fetch('http://localhost:3002/api/recipes/mine',
         {
-            credentials: "include"
+            method: "GET",
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
         }
     );
     const jsonResponse = await response.json();
@@ -23,9 +32,18 @@ const Allrecipes =()=>{
    };
 
    const handleDlete = async (id) => {
+
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token;
+
+
     const response = await fetch(`http://localhost:3002/api/recipes/${id}`,{
         method: 'DELETE',
         credentials: 'include',
+        headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
     });
     const jsonResponse = await response.json();
     if(!response.ok){
