@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
+import { supabase } from "../supabaseClient";
 const RecipeDetails =() =>{
     const [message, setMessage] = useState('');
     const { id } = useParams();
@@ -8,8 +9,16 @@ const RecipeDetails =() =>{
     const [recipes, setRecipes] = useState([]);
     
     const recipeId = async() =>{
+
+        const { data } = await supabase.auth.getSession();
+        const token = data.session?.access_token;
+
         const response = await fetch(`http://localhost:3002/api/recipes/${id}`, {
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
         });
         const jsonResponse = await response.json();
         if(!response.ok){
@@ -22,8 +31,16 @@ const RecipeDetails =() =>{
     };
 
     const getIngredients = async () => {
+
+        const { data } = await supabase.auth.getSession();
+        const token = data.session?.access_token;
+
         const response = await fetch(`http://localhost:3002/api/recipes/ingredients/${id}`, {
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
         });
         const jsonResponse = await response.json();
         
@@ -36,8 +53,16 @@ const RecipeDetails =() =>{
     };
 
     const getSteps = async() =>{
+
+        const { data } = await supabase.auth.getSession();
+        const token = data.session?.access_token;
+
         const response = await fetch(`http://localhost:3002/api/recipes/recipesteps/${id}`, {
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
         });
         const jsonResponse = await response.json();
         
