@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
-
+import { Link } from "react-router-dom";
 const Allrecipes =()=>{
     const [message, setMessage] = useState('');
     const [recipes, setRecipes] = useState([]);
@@ -61,6 +61,7 @@ const Allrecipes =()=>{
 
     return(
         <div>
+            <Link to="/newrecipe">Add</Link>
             <h2>My Rec</h2>
             {recipes.length === 0 && <p>No Rec Found</p>}
             {recipes.map(recipe => (

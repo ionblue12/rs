@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../supabaseClient";
+import { Link } from "react-router-dom";
 const RecipeDetails =() =>{
     const [message, setMessage] = useState('');
     const { id } = useParams();
@@ -83,6 +84,7 @@ const RecipeDetails =() =>{
 
     return (
         <div>
+            
             {recipes.length === 0 && <p>No Recipe</p>}
             {recipes.map(recipe => (
                 <h1 key={recipe.id}>{recipe.title}<img src={recipe.image_url} alt={recipe.title} /></h1>
