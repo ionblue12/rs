@@ -1,19 +1,24 @@
 
 import React, { useState } from "react";
 import { supabase } from "../supabaseClient";
-
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 const NewRecipe =()=>{
+
     const [message, setMessage] = useState('');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
+    const navigate = useNavigate();
 
-    const handleTitle = (e) => setTitle(e.target.value);
-    const handleDescription = (e) => setDescription(e.target.value);
-    const handleImage = (e) => setImage(e.target.value);
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors }
+    } = useForm();
 
-    const handleSubmit = async(e) =>{
-        e.preventDefault();
+    
+
+    const onSubmit = async(formData) =>{
+        
         const { data } = await supabase.auth.getSession();
         const token = data.session?.access_token;
         
@@ -26,9 +31,9 @@ const NewRecipe =()=>{
                 Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({
-                title: title,
-                description: description,
-                image_url: image,
+                title: formData.title,
+                description: formData.description,
+                image_url: formData.image_url,
             })
         });
         const responseJson = await response.json();
@@ -37,30 +42,28 @@ const NewRecipe =()=>{
             return;
         }
         setMessage(responseJson.message);
-        setDescription('');
-        setImage('');
-        setTitle('');
+        reset();
     }
 
 
     return(
-        <form onSubmit={handleSubmit}>
-            <label>title</label>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <label>Title</label>
+            <input {...register('title', {required: true})}></input>
+            {errors.title && <p>{errors.title.message}</p>}
+            <label>Description</label>
             <input
-            value={title}
-            onChange={handleTitle}></input>
-            <br></br>
-            <label>description</label>
-            <input
-            value={description}
-            onChange={handleDescription}></input>
+            {...register('description', {required: true})}
+            ></input>
+            {errors.description && <p>{errors.description.message}</p>}
             <br></br>
             <label>image_url</label>
             <input
-            value={image}
-            onChange={handleImage}></input>
+            {...register('image_url', {required: true})}
+            ></input>
+            {errors.image_url && <p>{errors.image_url.message}</p>} 
             <br></br>
-            <button>Submit</button>
+            <button type="submit">Submit</button>
         </form>
     )
 }
