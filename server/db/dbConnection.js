@@ -35,7 +35,7 @@ const getRecipe = (recipe_id)=> pool.query('SELECT * FROM recipe_steps WHERE rec
 
 const getIngredients = (recipe_id) => pool.query('SELECT * FROM ingredients WHERE recipe_id = $1', [recipe_id]);
 
-const addRecipe = (title, description, image_url, user_id) => pool.query('INSERT INTO recipes (title, description, image_url, user_id) VALUES ($1, $2, $3, $4)', [title, description, image_url, user_id]);
+const addRecipe = (title, description, image_url, user_id) => pool.query('INSERT INTO recipes (title, description, image_url, user_id) VALUES ($1, $2, $3, $4) RETURNING *', [title, description, image_url, user_id]);
 
 const addIngredients = (recipe_id, position, ingredient_name) => pool.query('INSERT INTO INGREDIENTS (recipe_id, position, ingredient_name) VALUES ($1, $2, $3)', [recipe_id, position, ingredient_name]);
 

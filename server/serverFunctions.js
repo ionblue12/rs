@@ -77,11 +77,27 @@ const recipeById = async (req, res) =>{
 };
 
 const newRecipe = async(req, res) => {
-    const { title, description, image_url} = req.body;
+    const { title, description, image_url,ingredients, steps } = req.body;
     const user_id = req.user.id;
     try{
-        await addRecipe(title, description, image_url, user_id);
-        return res.status(201).json({message: `${title} added to your recipes`});
+        const recipe = await addRecipe(title, description, image_url, user_id);
+        
+        if(ingredients && ingredients.length > 0){
+            for(const ingredient of ingredients){
+                await addIngredients(recipe.rows[0].id, ingredient.position, ingredient.ingredient_name);
+            }
+        };
+
+        if(steps && steps.length > 0){
+            for(const step of steps){
+                await addSteps(recipe.rows[0].id, step.step_number, step.instruction);
+            }
+        };
+
+
+
+        
+        return res.status(201).json({message: `${title} added to your recipes`, data: recipe.rows});
     }catch(err){
         console.error('failed to add the new recipe', err);
         return res.status(500).json({error: 'no new recipe added'});
